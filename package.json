@@ -1,0 +1,20 @@
+{
+  "name": "unexpected-htmllike-jsx-adapter",
+  "version": "0.1.0",
+  "scripts": {
+    "build": "babel src -d lib --source-maps true",
+    "prepublish": "npm run build",
+    "test": "mocha --compilers js:babel/register --compilers jsx:babel/register src/tests/*.spec.jsx"
+  },
+  "main": "lib/index.js",
+  "peerDependencies": {
+    "react": "^0.13.0 || ^0.14.0"
+  },
+  "devDependencies": {
+    "babel": "^5.8.29",
+    "mocha": "^2.3.3",
+    "object-assign": "^4.0.1",
+    "test-peer-range": "^1.0.1",
+    "unexpected": "^10.0.1"
+  }
+}
