@@ -27,33 +27,40 @@ function FuncComponent(props) {
     return null;
 }
 
+
 describe('ReactElementAdapter', () => {
+
+    let adapter;
+
+    beforeEach(() => {
+        adapter = ReactElementAdapter.create();
+    });
 
     describe('getName()', () => {
 
         it('gets the name of a native component', () => {
 
             const component = <span />;
-            expect(ReactElementAdapter.getName(component), 'to equal', 'span');
+            expect(adapter.getName(component), 'to equal', 'span');
         });
 
         it('gets the name of a createClass style custom component', () => {
 
             const component = <TestComponent />;
-            expect(ReactElementAdapter.getName(component), 'to equal', 'TestComponent');
+            expect(adapter.getName(component), 'to equal', 'TestComponent');
         });
 
         it('gets the name of a class based custom component', () => {
 
             const component = <ClassComponent />;
-            expect(ReactElementAdapter.getName(component), 'to equal', 'ClassComponent');
+            expect(adapter.getName(component), 'to equal', 'ClassComponent');
         });
 
         if (isReact014) {
             it('gets the name of a pure function based custom component (React >= 0.14 only)', () => {
 
                 const component = <FuncComponent />;
-                expect(ReactElementAdapter.getName(component), 'to equal', 'FuncComponent');
+                expect(adapter.getName(component), 'to equal', 'FuncComponent');
             });
         }
     });
@@ -63,7 +70,7 @@ describe('ReactElementAdapter', () => {
         it('gets standard string attributes', () => {
 
             const component = <span test1="foo" test2="bar" />;
-            expect(ReactElementAdapter.getAttributes(component), 'to equal', {
+            expect(adapter.getAttributes(component), 'to equal', {
                 test1: 'foo',
                 test2: 'bar'
             });
@@ -72,7 +79,7 @@ describe('ReactElementAdapter', () => {
         it('gets numeric attributes', () => {
 
             const component = <span test1={42} test2={305.12} />;
-            expect(ReactElementAdapter.getAttributes(component), 'to equal', {
+            expect(adapter.getAttributes(component), 'to equal', {
                 test1: 42,
                 test2: 305.12
             });
@@ -81,9 +88,18 @@ describe('ReactElementAdapter', () => {
         it('gets object attributes', () => {
 
             const component = <span test1={ { test: 'foo', num: 42 } } />;
-            expect(ReactElementAdapter.getAttributes(component), 'to equal', {
+            expect(adapter.getAttributes(component), 'to equal', {
                 test1: { test: 'foo', num: 42 }
             });
+        });
+    });
+
+    describe('setOptions()', () => {
+
+        it('sets an option', () => {
+
+            adapter.setOptions({ someOption: true });
+            expect(adapter.getOptions(), 'to satisfy', { someOption: true });
         });
     });
 
@@ -92,19 +108,19 @@ describe('ReactElementAdapter', () => {
         it('gets an empty array when there are no children', () => {
 
             const component = <span />;
-            expect(ReactElementAdapter.getChildren(component), 'to equal', []);
+            expect(adapter.getChildren(component), 'to equal', []);
         });
 
         it('gets an array with one string child', () => {
 
             const component = <span>foo</span>;
-            expect(ReactElementAdapter.getChildren(component), 'to equal', [ 'foo' ]);
+            expect(adapter.getChildren(component), 'to equal', [ 'foo' ]);
         });
 
         it('gets an array with one numeric child', () => {
 
             const component = <span>{42}</span>;
-            expect(ReactElementAdapter.getChildren(component), 'to equal', [ 42 ]);
+            expect(adapter.getChildren(component), 'to equal', [ 42 ]);
         });
 
         it('gets an array with a component child', () => {
@@ -117,7 +133,7 @@ describe('ReactElementAdapter', () => {
                     <div>some text</div>
                 </span>
             );
-            expect(ReactElementAdapter.getChildren(component), 'to equal', [ <div>some text</div> ]);
+            expect(adapter.getChildren(component), 'to equal', [ <div>some text</div> ]);
         });
 
         it('gets an array with several component children', () => {
@@ -132,10 +148,29 @@ describe('ReactElementAdapter', () => {
                     <span attrib="hello world">cheese</span>
                 </span>
             );
-            expect(ReactElementAdapter.getChildren(component), 'to equal', [
+            expect(adapter.getChildren(component), 'to equal', [
                 <div>some text</div>,
                 <div>foo</div>,
                 <span attrib="hello world">cheese</span>
+            ]);
+        });
+
+        it('does not concat text children by default', () => {
+
+            const component = <span>Hello {42} world</span>;
+
+            expect(adapter.getChildren(component), 'to equal', [
+                'Hello ', 42, ' world'
+            ]);
+        });
+
+        it('does concat text children when concatTextContent is true', () => {
+
+            const component = <span>Hello {42} world</span>;
+            adapter.setOptions({ concatTextContent: true })
+
+            expect(adapter.getChildren(component), 'to equal', [
+                'Hello 42 world'
             ]);
         });
     });

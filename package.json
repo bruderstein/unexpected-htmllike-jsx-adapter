@@ -16,5 +16,8 @@
     "object-assign": "^4.0.1",
     "test-peer-range": "^1.0.1",
     "unexpected": "^10.0.1"
+  },
+  "dependencies": {
+    "object-assign": "^4.0.1"
   }
 }
