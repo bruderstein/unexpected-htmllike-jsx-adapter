@@ -15,6 +15,11 @@ const DefaultOptions = {
 };
 
 function convertValueTypeToString(value) {
+
+    if (typeof value === 'string') { // Common case can be fasttracked
+        return value;
+    }
+
     if (value === null || value === undefined) {
         return '';
     }
