@@ -33,7 +33,7 @@ describe('ReactElementAdapter', () => {
     let adapter;
 
     beforeEach(() => {
-        adapter = ReactElementAdapter.create();
+        adapter = new ReactElementAdapter();
     });
 
     describe('getName()', () => {
@@ -171,6 +171,26 @@ describe('ReactElementAdapter', () => {
 
             expect(adapter.getChildren(component), 'to equal', [
                 'Hello 42 world'
+            ]);
+        });
+
+        it('converts content to strings when `convertToString` option is true', () => {
+
+            const component = <span>Hello {42} world</span>;
+            adapter.setOptions({ convertToString: true });
+
+            expect(adapter.getChildren(component), 'to equal', [
+                'Hello ', '42', ' world'
+            ]);
+        });
+
+        it('converts content with null when `convertToString` option is true', () => {
+
+            const component = <span>Hello {null} world</span>;
+            adapter.setOptions({ convertToString: true });
+
+            expect(adapter.getChildren(component), 'to equal', [
+                'Hello ', ' world'
             ]);
         });
     });
