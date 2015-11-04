@@ -28,6 +28,8 @@ Available options:
 * concatTextContent - (default `false`) set this to true, to concatenate text content items.
 * convertToString - (default `false`) converts the content to strings. This is useful when comparing against a rendered
 result, where only strings are available, but you want to maintain the separate items
+* includeKeyProp - (default `false`) includes the `key` prop in the returned attributes
+* includeRefProp - (default `false`) includse the `ref` prop in the returned attributes
 
 For example, with the following JSX
 ```xml

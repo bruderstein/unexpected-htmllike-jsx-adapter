@@ -64,6 +64,15 @@ class ReactElementAdapter {
                 }
             }
         }
+
+        if (this._options.includeKeyProp && element.key) {
+            realProps.key = element.key;
+        }
+
+        if (this._options.includeRefProp && element.ref) {
+            realProps.ref = element.ref;
+        }
+
         return realProps;
     }
 

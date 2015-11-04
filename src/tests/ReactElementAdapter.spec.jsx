@@ -193,5 +193,33 @@ describe('ReactElementAdapter', () => {
                 'Hello ', ' world'
             ]);
         });
+
+        it('ignores the `key` attribute', () => {
+
+            const component = <span key="abc" id="foo"></span>;
+
+            expect(adapter.getAttributes(component), 'to equal', { id: 'foo' });
+        });
+
+        it('ignores the `ref` attribute', () => {
+
+            const component = <span ref="abc" id="foo"></span>;
+
+            expect(adapter.getAttributes(component), 'to equal', { id: 'foo' });
+        });
+
+        it('does not ignore the `key` attribute when includeKeyProp option is true', () => {
+            adapter.setOptions({ includeKeyProp: true });
+
+            const component = <span key="abc" id="foo"></span>;
+            expect(adapter.getAttributes(component), 'to equal', { key: 'abc', id: 'foo' });
+        });
+
+        it('does not ignore the `ref` attribute when includeRefProp option is true', () => {
+            adapter.setOptions({ includeRefProp: true });
+
+            const component = <span ref="abc" id="foo"></span>;
+            expect(adapter.getAttributes(component), 'to equal', { ref: 'abc', id: 'foo' });
+        });
     });
 });
