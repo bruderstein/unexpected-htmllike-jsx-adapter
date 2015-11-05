@@ -85,7 +85,9 @@ class ReactElementAdapter {
             }
         });
 
-        if (this._options.convertToString) {
+        if (this._options.convertToString ||
+            (this._options.convertMultipleRawToStrings &&
+             childrenArray.length > 1)) {
             childrenArray = childrenArray.reduce((agg, child) => {
                 if (child !== null && child !== undefined && isRawType(child)) {
                     child = convertValueTypeToString(child);
@@ -93,7 +95,6 @@ class ReactElementAdapter {
                 agg.push(child);
                 return agg;
             }, []);
-            console.log(childrenArray)
         }
 
         if (this._options.concatTextContent) {

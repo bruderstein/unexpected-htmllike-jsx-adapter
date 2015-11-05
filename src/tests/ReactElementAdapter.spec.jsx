@@ -210,6 +210,36 @@ describe('ReactElementAdapter', () => {
             ]);
         });
 
+        it('converts multiple raw content to strings using `convertMultipleRawToStrings:true`', () => {
+
+                const component = <span>Hello world {21}</span>;
+                adapter.setOptions({ convertMultipleRawToStrings: true });
+
+                expect(adapter.getChildren(component), 'to equal', [
+                    'Hello world ', '21'
+                ]);
+        });
+
+        it('leaves single raw content alone with `convertMultipleRawToStrings:true`', () => {
+
+            const component = <span>{21}</span>;
+            adapter.setOptions({ convertMultipleRawToStrings: true });
+
+            expect(adapter.getChildren(component), 'to equal', [
+                21
+            ]);
+        });
+
+        it('leaves content when there is only one item, after ignoring `null`s', () => {
+
+            const component = <span>{null}{21}</span>;
+            adapter.setOptions({ convertMultipleRawToStrings: true });
+
+            expect(adapter.getChildren(component), 'to equal', [
+                21
+            ]);
+        })
+
         it('ignores the `key` attribute', () => {
 
             const component = <span key="abc" id="foo"></span>;
@@ -237,5 +267,6 @@ describe('ReactElementAdapter', () => {
             const component = <span ref="abc" id="foo"></span>;
             expect(adapter.getAttributes(component), 'to equal', { ref: 'abc', id: 'foo' });
         });
+
     });
 });
