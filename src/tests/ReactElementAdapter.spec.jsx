@@ -194,6 +194,22 @@ describe('ReactElementAdapter', () => {
             ]);
         });
 
+        it('converts only raw content to strings', () => {
+
+            const component = (
+                <div>
+                    <span>Hello world {21}</span>
+                    <span>{42}</span>
+                </div>
+            );
+            adapter.setOptions({ convertToString: true });
+
+            expect(adapter.getChildren(component), 'to equal', [
+                <span>Hello world {21}</span>,
+                <span>{42}</span>
+            ]);
+        });
+
         it('ignores the `key` attribute', () => {
 
             const component = <span key="abc" id="foo"></span>;

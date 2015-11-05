@@ -87,11 +87,13 @@ class ReactElementAdapter {
 
         if (this._options.convertToString) {
             childrenArray = childrenArray.reduce((agg, child) => {
-                if (child !== null && child !== undefined) {
-                    agg.push(convertValueTypeToString(child))
-                    return agg;
+                if (child !== null && child !== undefined && isRawType(child)) {
+                    child = convertValueTypeToString(child);
                 }
-            }, [])
+                agg.push(child);
+                return agg;
+            }, []);
+            console.log(childrenArray)
         }
 
         if (this._options.concatTextContent) {
