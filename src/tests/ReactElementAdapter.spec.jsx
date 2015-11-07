@@ -268,5 +268,16 @@ describe('ReactElementAdapter', () => {
             expect(adapter.getAttributes(component), 'to equal', { ref: 'abc', id: 'foo' });
         });
 
+        it('ignores boolean elements', () => {
+            const component = <span>{true}</span>;
+            expect(adapter.getChildren(component), 'to equal', []);
+        })
+
+        it('returns the expect.it function for an expect.it content assertion', () => {
+
+            const component = <span>{expect.it('to be a string')}</span>;
+            expect(adapter.getChildren(component), 'to equal', [ expect.it('to be a function')] )
+        });
+
     });
 });

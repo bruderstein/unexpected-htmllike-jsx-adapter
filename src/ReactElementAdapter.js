@@ -39,6 +39,13 @@ function concatenateStringChildren(accum, value) {
     return accum;
 }
 
+function isValidChild(child) {
+    const typeofChild = typeof child;
+    return (typeofChild === 'string' ||
+        typeofChild === 'number' ||
+        typeofChild === 'function' ||
+        (typeof child === 'object' && child !== null));
+}
 
 class ReactElementAdapter {
 
@@ -79,11 +86,20 @@ class ReactElementAdapter {
     getChildren(element) {
 
         var childrenArray = [];
-        React.Children.forEach(element.props.children, function (child) {
-            if (child !== null) {
-                childrenArray.push(child);
-            }
-        });
+
+        // This is not using React.Children.forEach / map / toArray because it drops invalid children,
+        // which would be fine, but we want to explicitly include the `expect.it()` function as a valid child
+        // to enable inline assertions
+        // This mirrors the React.Children.forEach logic, as seen at
+        // https://github.com/facebook/react/blob/35962a00084382b49d1f9e3bd36612925f360e5b/src/shared/utils/traverseAllChildren.js
+        // with the exception that we remove the nulls
+        // Basically strings & numbers && elements are allowed (elements classed as objects & functions for simplicity)
+        if (Array.isArray(element.props.children)) {
+            childrenArray = childrenArray.concat(element.props.children).filter(child => isValidChild(child));
+        } else if (isValidChild(element.props.children)) {
+
+            childrenArray = [ element.props.children ];
+        }
 
         if (this._options.convertToString ||
             (this._options.convertMultipleRawToStrings &&
