@@ -1,6 +1,6 @@
 {
   "name": "unexpected-htmllike-jsx-adapter",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Adapter for unexpected-htmllike for ReactElements, e.g. JSX and the shallow renderer",
   "author": {
     "name": "Dave Brotherstone",
