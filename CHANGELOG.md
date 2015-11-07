@@ -9,3 +9,5 @@ Initial version
   For multiple children, all raw content (e.g. strings, numbers) are converted to strings, but a single
   child (e.g. a single number), is left as the original type
   
+## v0.3.0
+* Add support for `expect.it()` assertions in the content
