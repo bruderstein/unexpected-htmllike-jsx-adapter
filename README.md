@@ -4,7 +4,7 @@ This is the JSX / ReactElement adapter for [unexpected-htmllike](https://github.
 
 # Usage
 
-You need to call the `create()` to create the adapter.  With the (unique) instance you get back, you can set
+You need to instantiate a new instance of the adapter in order to use it.  With the instance, you can set
 options (using `setOptions({ ... })`) to influence how certain things are returned to 
 [unexpected-htmllike](https://github.com/bruderstein/unexpected-htmllike). 
 
@@ -12,7 +12,7 @@ options (using `setOptions({ ... })`) to influence how certain things are return
 var UnexpectedHtmlLike = require('unexpected-htmllike');
 var JsxAdapter = require('unexpected-htmllike-jsx-adapter');
 
-var adapter = JsxAdapter.create();
+var adapter = new JsxAdapter();
 
 var jsxHtmlLike = new UnexpectedHtmlLike(adapter);
 
