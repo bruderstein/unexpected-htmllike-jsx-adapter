@@ -11,3 +11,9 @@ Initial version
   
 ## v0.3.0
 * Add support for `expect.it()` assertions in the content
+
+## v0.4.0
+* Add support for iterators - thanks to @jkimbo for the failing test in unexpected-react, and @Lugribossk for reporting
+
+## v0.4.1
+* Republish with added changelog and credits
