@@ -1,6 +1,10 @@
 import React from 'react';
 import ObjectAssign from 'object-assign';
+import getIteratorFn from './getIteratorFn';
 
+const REACT_ELEMENT_TYPE =
+    (typeof Symbol === 'function' && Symbol.for && Symbol.for('react.element')) ||
+    0xeac7;
 
 function isRawType(value) {
     var type = typeof value;
@@ -43,8 +47,11 @@ function isValidChild(child) {
     const typeofChild = typeof child;
     return (typeofChild === 'string' ||
         typeofChild === 'number' ||
-        typeofChild === 'function' ||
-        (typeof child === 'object' && child !== null));
+        (typeofChild === 'function' && child._expectIt) ||
+        (typeof child === 'object' && child !== null &&
+         (child._isReactElement /* React 0.13 */
+         || child.$$typeof === REACT_ELEMENT_TYPE /* React 0.14 */))
+    );
 }
 
 class ReactElementAdapter {
@@ -86,6 +93,7 @@ class ReactElementAdapter {
     getChildren(element) {
 
         var childrenArray = [];
+        var iteratorFn;
 
         // This is not using React.Children.forEach / map / toArray because it drops invalid children,
         // which would be fine, but we want to explicitly include the `expect.it()` function as a valid child
@@ -97,8 +105,14 @@ class ReactElementAdapter {
         if (Array.isArray(element.props.children)) {
             childrenArray = childrenArray.concat(element.props.children).filter(child => isValidChild(child));
         } else if (isValidChild(element.props.children)) {
-
             childrenArray = [ element.props.children ];
+        } else if (iteratorFn = getIteratorFn(element.props.children)) {
+            const iterator = iteratorFn.call(element.props.children);
+            let step;
+
+            while (!(step = iterator.next()).done) {
+                childrenArray.push(step.value);
+            }
         }
 
         if (this._options.convertToString ||

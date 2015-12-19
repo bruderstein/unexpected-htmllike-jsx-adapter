@@ -1,8 +1,10 @@
 
 import React from 'react';
 import Unexpected from 'unexpected';
+import Immutable from 'immutable';
 
 import ReactElementAdapter from '../';
+
 const expect = Unexpected.clone();
 
 const versionParts = React.version.split('.');
@@ -279,5 +281,17 @@ describe('ReactElementAdapter', () => {
             expect(adapter.getChildren(component), 'to equal', [ expect.it('to be a function')] )
         });
 
+        it('returns the children from an iterator', () => {
+
+            // Use an immutable.js List as an iterator
+            const list = Immutable.List([ <span>one</span>, <span>two</span>, <span>three</span>]);
+
+            const component = <span>{list}</span>;
+            expect(adapter.getChildren(component), 'to equal', [
+                <span>one</span>,
+                <span>two</span>,
+                <span>three</span>
+            ]);
+        });
     });
 });
