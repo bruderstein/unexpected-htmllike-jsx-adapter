@@ -145,4 +145,6 @@ class ReactElementAdapter {
 }
 
 
+ReactElementAdapter.prototype.classAttributeName = 'className';
+
 export default ReactElementAdapter;

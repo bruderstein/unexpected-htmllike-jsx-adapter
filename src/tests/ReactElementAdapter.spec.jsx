@@ -294,4 +294,9 @@ describe('ReactElementAdapter', () => {
             ]);
         });
     });
+
+    it('returns the correct classAttributeName', () => {
+
+        expect(adapter.classAttributeName, 'to equal', 'className');
+    });
 });

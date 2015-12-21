@@ -17,3 +17,6 @@ Initial version
 
 ## v0.4.1
 * Republish with added changelog and credits
+
+## v0.5.0
+* Add classAttributeName, for compatibility with unexpected-htmllike v0.4.0
