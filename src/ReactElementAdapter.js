@@ -54,6 +54,14 @@ function isValidChild(child) {
     );
 }
 
+function flatten(value) {
+    if (!Array.isArray(value)) {
+        return [value];
+    }
+
+    return value.reduce((result, item) => result.concat(flatten(item)), [])
+}
+
 class ReactElementAdapter {
 
     constructor(options) {
@@ -92,6 +100,7 @@ class ReactElementAdapter {
 
     getChildren(element) {
 
+        var children = element.props.children;
         var childrenArray = [];
         var iteratorFn;
 
@@ -102,12 +111,12 @@ class ReactElementAdapter {
         // https://github.com/facebook/react/blob/35962a00084382b49d1f9e3bd36612925f360e5b/src/shared/utils/traverseAllChildren.js
         // with the exception that we remove the nulls
         // Basically strings & numbers && elements are allowed (elements classed as objects & functions for simplicity)
-        if (Array.isArray(element.props.children)) {
-            childrenArray = childrenArray.concat(element.props.children).filter(child => isValidChild(child));
-        } else if (isValidChild(element.props.children)) {
-            childrenArray = [ element.props.children ];
-        } else if (iteratorFn = getIteratorFn(element.props.children)) {
-            const iterator = iteratorFn.call(element.props.children);
+        if (Array.isArray(children)) {
+            childrenArray = flatten(children).filter(child => isValidChild(child));
+        } else if (isValidChild(children)) {
+            childrenArray = [ children ];
+        } else if (iteratorFn = getIteratorFn(children)) {
+            const iterator = iteratorFn.call(children);
             let step;
 
             while (!(step = iterator.next()).done) {

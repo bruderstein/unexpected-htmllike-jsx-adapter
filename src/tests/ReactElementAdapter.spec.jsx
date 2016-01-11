@@ -293,6 +293,39 @@ describe('ReactElementAdapter', () => {
                 <span>three</span>
             ]);
         });
+
+        it('flattens the children', () => {
+            const list = [
+                <span>one</span>,
+                <span>two</span>,
+                [
+                    <span>three</span>,
+                    <span>Four</span>,
+                    <span>Five</span>,
+                    [
+                        <span>Six</span>,
+                        <span>Seven</span>
+                    ],
+                    <span>Eight</span>
+                ],
+                <span>Nine</span>,
+                <span>Ten</span>
+            ];
+
+            const component = <span>{list}</span>;
+            expect(adapter.getChildren(component), 'to equal', [
+                <span>one</span>,
+                <span>two</span>,
+                <span>three</span>,
+                <span>Four</span>,
+                <span>Five</span>,
+                <span>Six</span>,
+                <span>Seven</span>,
+                <span>Eight</span>,
+                <span>Nine</span>,
+                <span>Ten</span>
+            ]);
+        })
     });
 
     it('returns the correct classAttributeName', () => {
