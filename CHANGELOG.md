@@ -20,3 +20,22 @@ Initial version
 
 ## v0.5.0
 * Add classAttributeName, for compatibility with unexpected-htmllike v0.4.0
+
+## v0.5.1
+* Fix nested children (thanks @sunesimonsen)
+  e.g. For the component
+
+  ```js
+  var list = [ <span>one</span>, <span>two</span> ];
+
+  var component = (
+    <Test>
+      Hi
+      {list}
+    </Test>
+  );
+
+  ```
+
+  The contents of the `Test` component are nested arrays (`[ 'Hi', [ <span>one</span>, <span>two</span> ] ]`).
+  These are now supported
