@@ -39,3 +39,8 @@ Initial version
 
   The contents of the `Test` component are nested arrays (`[ 'Hi', [ <span>one</span>, <span>two</span> ] ]`).
   These are now supported
+
+## v1.0.0
+
+Update React support to v0.14 and v15, drop support for React 0.13.x (thanks Christian Hoffmeister @choffmeister)
+
