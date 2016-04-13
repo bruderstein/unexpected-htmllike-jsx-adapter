@@ -278,7 +278,7 @@ describe('ReactElementAdapter', () => {
         it('returns the expect.it function for an expect.it content assertion', () => {
 
             const component = <span>{expect.it('to be a string')}</span>;
-            expect(adapter.getChildren(component), 'to equal', [ expect.it('to be a function')] )
+            expect(adapter.getChildren(component), 'to satisfy', [ expect.it('to be a function') ]);
         });
 
         it('returns the children from an iterator', () => {
