@@ -55,7 +55,22 @@ function isValidChild(child) {
 }
 
 function flatten(value) {
+    
+    let iteratorFn = getIteratorFn(value);
+    
+    if (!Array.isArray(value) && typeof value !== 'string' && iteratorFn) {
+        const iterator = iteratorFn.call(value);
+        const childrenArray = [];
+        let step;
+        
+        while (!(step = iterator.next()).done) {
+            childrenArray.push(step.value);
+        }
+        return childrenArray;
+    }
+    
     if (!Array.isArray(value)) {
+        
         return [value];
     }
 
