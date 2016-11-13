@@ -44,3 +44,7 @@ Initial version
 
 Update React support to v0.14 and v15, drop support for React 0.13.x (thanks Christian Hoffmeister @choffmeister)
 
+## v1.0.1
+
+Fix issue with multiple children, when one or more child is a generator (e.g. Immutable.List)
+Reported by @Raigen, under https://github.com/bruderstein/unexpected-react/issues/28
