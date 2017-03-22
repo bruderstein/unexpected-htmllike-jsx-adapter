@@ -1,5 +1,7 @@
 # unexpected-htmllike-jsx-adapter
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/bruderstein/unexpected-htmllike-jsx-adapter.svg)](https://greenkeeper.io/)
+
 This is the JSX / ReactElement adapter for [unexpected-htmllike](https://github.com/bruderstein/unexpected-htmllike)
 
 # Usage
