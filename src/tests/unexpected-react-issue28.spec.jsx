@@ -2,7 +2,7 @@
 const Unexpected = require('unexpected');
 
 const React = require('react');
-const TestUtils = require('react-addons-test-utils');
+const TestUtils = require('react-test-renderer/shallow');
 const Immutable = require('immutable');
 const ReactElementAdapter = require('../');
 
