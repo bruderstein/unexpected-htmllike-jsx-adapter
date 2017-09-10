@@ -13,7 +13,7 @@
   },
   "main": "lib/index.js",
   "peerDependencies": {
-    "react": "^0.14.0 || ^15.0.0"
+    "react": "^0.14.0 || ^15.0.0 || ^16.0.0-rc"
   },
   "devDependencies": {
     "babel": "^5.8.29",
