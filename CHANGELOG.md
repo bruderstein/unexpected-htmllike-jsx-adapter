@@ -52,3 +52,7 @@ Reported by @Raigen, under https://github.com/bruderstein/unexpected-react/issue
 ## v1.0.2
 
 Add React 16RC support as peerDep
+
+## v1.0.3
+
+Add React 16 support as peerDep
